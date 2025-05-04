@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AppWrap } from '../../wrapper';
-import { images } from '../../constants'; // if you need images later
-import './About.scss';
+import './About.scss'; // images removed for now
 
 const aboutCards = [
-  {}, {}, {}, // Empty cards
+  {
+    title: 'Security Analyst',
+    description: 'Ensuring systems are protected against modern threats.',
+  },
+  {
+    title: 'Integration Developer',
+    description: 'Connecting applications seamlessly and securely.',
+  },
+  {
+    title: 'Software Administrator',
+    description: 'Maintaining and optimizing software platforms.',
+  },
 ];
 
 const transition = {
@@ -46,14 +56,12 @@ const About = () => {
         transition={transition}
         className="app__about-card"
       >
-        {/* Empty Card */}
         <div className="app__about-card-content">
-          <h2 className="head-text">Title</h2>
-          <p className="p-text">Description here...</p>
+          <h2 className="head-text">{aboutCards[currentIndex].title}</h2>
+          <p className="p-text">{aboutCards[currentIndex].description}</p>
         </div>
       </motion.div>
 
-      {/* Navigation Dots */}
       <div className="app__about-dots">
         {aboutCards.map((_, index) => (
           <div
@@ -64,7 +72,6 @@ const About = () => {
         ))}
       </div>
 
-      {/* Arrows */}
       <div className="app__about-arrows">
         <div className="arrow-left" onClick={handlePrev}>&lt;</div>
         <div className="arrow-right" onClick={handleNext}>&gt;</div>
