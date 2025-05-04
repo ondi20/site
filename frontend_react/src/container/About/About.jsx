@@ -1,76 +1,83 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { AppWrap, MotionWrap } from '../../wrapper';
-import './About.scss';
-import { urlFor, client } from '../../client';
+import { AppWrap } from '../../wrapper';
+import './About.scss'; // images removed for now
+
+const aboutCards = [
+  {
+    title: 'Security Analyst',
+    description: 'Ensuring systems are protected against modern threats.',
+  },
+  {
+    title: 'Integration Developer',
+    description: 'Connecting applications seamlessly and securely.',
+  },
+  {
+    title: 'Software Administrator',
+    description: 'Maintaining and optimizing software platforms.',
+  },
+];
+
+const transition = {
+  duration: 1,
+  ease: 'easeInOut',
+};
 
 const About = () => {
-  const [abouts, setAbouts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const query = '*[_type == "abouts"]';
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000);
 
-    client.fetch(query).then((data) => {
-      setAbouts(data);
-    });
-  }, []);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % abouts.length);
+  const handleDotClick = (index) => {
+    setCurrentIndex(index);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? abouts.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? aboutCards.length - 1 : prevIndex - 1));
   };
 
-  const currentAbout = abouts[currentIndex];
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === aboutCards.length - 1 ? 0 : prevIndex + 1));
+  };
 
   return (
-    <>
-      <h3 className="head-text">
-        I Know that <span>Good Design</span> <br />means <span>Good Business</span>
-      </h3>
+    <div className="app__about app__flex">
+      <motion.div
+        key={currentIndex}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}
+        transition={transition}
+        className="app__about-card"
+      >
+        <div className="app__about-card-content">
+          <h2 className="head-text">{aboutCards[currentIndex].title}</h2>
+          <p className="p-text">{aboutCards[currentIndex].description}</p>
+        </div>
+      </motion.div>
 
-      <div className="app__profiles">
-        {currentAbout && (
-          <motion.div
-            key={currentAbout.title}
-            className="app__profile-item"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            {currentAbout.imgUrl && (
-              <img
-                src={urlFor(currentAbout.imgUrl)}
-                alt={currentAbout.title}
-              />
-            )}
-            <h2 className="bold-text" style={{ marginTop: 20 }}>
-              {currentAbout.title}
-            </h2>
-            <p className="p-text" style={{ marginTop: 10 }}>
-              {currentAbout.description}
-            </p>
-          </motion.div>
-        )}
+      <div className="app__about-dots">
+        {aboutCards.map((_, index) => (
+          <div
+            key={index}
+            className={`app__about-dot ${currentIndex === index ? 'active' : ''}`}
+            onClick={() => handleDotClick(index)}
+          />
+        ))}
       </div>
 
-      {abouts.length > 1 && (
-        <div className="app__carousel-controls">
-          <button className="prev" onClick={handlePrev}>Prev</button>
-          <button className="next" onClick={handleNext}>Next</button>
-        </div>
-      )}
-    </>
+      <div className="app__about-arrows">
+        <div className="arrow-left" onClick={handlePrev}>&lt;</div>
+        <div className="arrow-right" onClick={handleNext}>&gt;</div>
+      </div>
+    </div>
   );
 };
 
-export default AppWrap(
-  MotionWrap(About, 'app__about'),
-  'about',
-  'app__whitebg'
-);
+export default AppWrap(About, 'about');
