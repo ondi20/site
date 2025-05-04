@@ -113,4 +113,3 @@ export default AppWrap(
   'about',
   'app__whitebg'
 );
-import React from 'react';
