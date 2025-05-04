@@ -81,3 +81,4 @@ const About = () => {
 };
 
 export default AppWrap(About, 'about');
+
