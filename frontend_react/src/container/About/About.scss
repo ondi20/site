@@ -1,117 +1,118 @@
-.app__about {
-  flex: 1;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+@import '../Testimonial/Testimonial.scss';
+// .app__about {
+//   flex: 1;
+//   width: 100%;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   position: relative;
 
-  padding: 4rem 2rem;
+//   padding: 4rem 2rem;
 
-  background: var(--primary-color);
+//   background: var(--primary-color);
 
-  overflow: hidden;
+//   overflow: hidden;
 
-  @media screen and (min-width: 2000px) {
-    padding: 6rem 2rem;
-  }
-}
+//   @media screen and (min-width: 2000px) {
+//     padding: 6rem 2rem;
+//   }
+// }
 
-.app__about-cards {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  height: 400px;
-  position: relative;
-}
+// .app__about-cards {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 400px;
+//   position: relative;
+// }
 
-.app__about-card {
-  width: 300px;
-  background: var(--white-color);
-  border-radius: 15px;
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+// .app__about-card {
+//   width: 300px;
+//   background: var(--white-color);
+//   border-radius: 15px;
+//   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+//   padding: 2rem;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
 
-  text-align: center;
-  transition: all 0.3s ease;
+//   text-align: center;
+//   transition: all 0.3s ease;
 
-  img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1rem;
-  }
+//   img {
+//     width: 80px;
+//     height: 80px;
+//     border-radius: 50%;
+//     object-fit: cover;
+//     margin-bottom: 1rem;
+//   }
 
-  h2 {
-    margin-top: 1rem;
-    font-weight: bold;
-    color: var(--black-color);
-  }
+//   h2 {
+//     margin-top: 1rem;
+//     font-weight: bold;
+//     color: var(--black-color);
+//   }
 
-  p {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--gray-color);
-  }
-}
+//   p {
+//     margin-top: 0.5rem;
+//     font-size: 0.9rem;
+//     color: var(--gray-color);
+//   }
+// }
 
-.app__about-navigation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
+// .app__about-navigation {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 2rem;
 
-  .app__about-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--gray-color);
-    margin: 0 5px;
-    cursor: pointer;
+//   .app__about-dot {
+//     width: 10px;
+//     height: 10px;
+//     border-radius: 50%;
+//     background: var(--gray-color);
+//     margin: 0 5px;
+//     cursor: pointer;
 
-    &.active {
-      background: var(--secondary-color);
-    }
-  }
-}
+//     &.active {
+//       background: var(--secondary-color);
+//     }
+//   }
+// }
 
-.app__about-buttons {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 2rem;
-  transform: translateY(-50%);
+// .app__about-buttons {
+//   position: absolute;
+//   top: 50%;
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 0 2rem;
+//   transform: translateY(-50%);
 
-  button {
-    background: var(--white-color);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
+//   button {
+//     background: var(--white-color);
+//     border: none;
+//     padding: 0.5rem 1rem;
+//     border-radius: 10px;
+//     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+//     cursor: pointer;
 
-    font-size: 1.5rem;
-    font-weight: bold;
+//     font-size: 1.5rem;
+//     font-weight: bold;
 
-    &:hover {
-      background: var(--secondary-color);
-      color: var(--white-color);
-    }
-  }
-}
+//     &:hover {
+//       background: var(--secondary-color);
+//       color: var(--white-color);
+//     }
+//   }
+// }
 
-@media screen and (max-width: 768px) {
-  .app__about-card {
-    width: 250px;
-  }
-}
+// @media screen and (max-width: 768px) {
+//   .app__about-card {
+//     width: 250px;
+//   }
+// }

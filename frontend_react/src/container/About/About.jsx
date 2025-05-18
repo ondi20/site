@@ -1,84 +1,90 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { AppWrap } from '../../wrapper';
-import './About.scss'; // images removed for now
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const aboutCards = [
-  {
-    title: 'Security Analyst',
-    description: 'Ensuring systems are protected against modern threats.',
-  },
-  {
-    title: 'Integration Developer',
-    description: 'Connecting applications seamlessly and securely.',
-  },
-  {
-    title: 'Software Administrator',
-    description: 'Maintaining and optimizing software platforms.',
-  },
-];
-
-const transition = {
-  duration: 1,
-  ease: 'easeInOut',
-};
+import { AppWrap, MotionWrap } from '../../wrapper';
+import { urlFor, client } from '../../client';
+import './About.scss';
 
 const About = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [abouts, setAbouts] = useState([]);
+  const [direction, setDirection] = useState(0); // 1 for forward, -1 for backward
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext();
-    }, 5000);
+    const query = '*[_type == "abouts"]';
+    client.fetch(query).then((data) => setAbouts(data));
+  }, []);
 
-    return () => clearInterval(interval);
-  }, [currentIndex]);
-
-  const handleDotClick = (index) => {
-    setCurrentIndex(index);
+  const paginate = (newDirection) => {
+    setDirection(newDirection);
+    setCurrentIndex((prevIndex) => {
+      const newIndex =
+        newDirection === 1
+          ? (prevIndex + 1) % abouts.length
+          : (prevIndex - 1 + abouts.length) % abouts.length;
+      return newIndex;
+    });
   };
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? aboutCards.length - 1 : prevIndex - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === aboutCards.length - 1 ? 0 : prevIndex + 1));
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+    }),
   };
 
   return (
-    <div className="app__about app__flex">
-      <motion.div
-        key={currentIndex}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0 }}
-        transition={transition}
-        className="app__about-card"
-      >
-        <div className="app__about-card-content">
-          <h2 className="head-text">{aboutCards[currentIndex].title}</h2>
-          <p className="p-text">{aboutCards[currentIndex].description}</p>
-        </div>
-      </motion.div>
+    <>
+      {abouts.length > 0 && (
+        <>
+          <div className="app__testimonial-item-wrapper app__flex">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentIndex}
+                className="app__testimonial-item app__flex"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+              >
+                <img
+                  src={urlFor(abouts[currentIndex].imgUrl)}
+                  alt={abouts[currentIndex].title}
+                />
 
-      <div className="app__about-dots">
-        {aboutCards.map((_, index) => (
-          <div
-            key={index}
-            className={`app__about-dot ${currentIndex === index ? 'active' : ''}`}
-            onClick={() => handleDotClick(index)}
-          />
-        ))}
-      </div>
+                <div className="app__testimonial-content">
+                  <h2 className="bold-text">{abouts[currentIndex].title}</h2>
+                  <div>
+                    <p className="p-text">{abouts[currentIndex].description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-      <div className="app__about-arrows">
-        <div className="arrow-left" onClick={handlePrev}>&lt;</div>
-        <div className="arrow-right" onClick={handleNext}>&gt;</div>
-      </div>
-    </div>
+          <div className="app__testimonial-btns app__flex">
+            <div className="app__flex" onClick={() => paginate(-1)}>
+              <HiChevronLeft />
+            </div>
+            <div className="app__flex" onClick={() => paginate(1)}>
+              <HiChevronRight />
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
-export default AppWrap(About, 'about');
-
+export default AppWrap(MotionWrap(About, 'app__testimonial'), 'about', 'app__whitebg');
